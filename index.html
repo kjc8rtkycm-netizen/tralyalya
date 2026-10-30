@@ -14,50 +14,61 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#020a05;--card:rgba(18,35,24,.8);--green:#22c55e;--green2:#4ade80;--green-dark:#166534;--green-light:#86efac;--txt:#f0fdf4;--txt2:#86a896;--glow:rgba(34,197,94,0.4);}
+:root{--bg:#020a05;--card:rgba(18,35,24,.8);--green:#22c55e;--green2:#4ade80;--green-dark:#166534;--green-light:#86efac;--gold:#fbbf24;--txt:#f0fdf4;--txt2:#86a896;--glow:rgba(34,197,94,0.4);--glow-gold:rgba(251,191,36,0.4);}
 html,body{height:100%;background:var(--bg);color:var(--txt);font-family:'Inter',system-ui,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
 body{display:flex;justify-content:center;align-items:center;position:relative}
+
+/* Фон */
 .bg-glow{position:fixed;inset:0;z-index:0;overflow:hidden}
 .bg-glow::before,.bg-glow::after{content:'';position:absolute;width:80vw;height:80vw;border-radius:50%;filter:blur(100px);opacity:0.3}
 .bg-glow::before{background:var(--green);top:-20%;left:-20%;animation:float 15s infinite}
 .bg-glow::after{background:#15803d;bottom:-20%;right:-20%;animation:float 18s infinite reverse}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(10%,10%)}}
-#app{width:100%;max-width:450px;height:100vh;height:100dvh;position:relative;z-index:1;display:flex;flex-direction:column;padding:20px;overflow-y:auto;scrollbar-width:none}
-#app::-webkit-scrollbar{display:none}
-@media(min-width:500px){#app{height:90vh;border-radius:32px;background:rgba(5,20,12,0.6);backdrop-filter:blur(20px);border:1px solid rgba(74,222,128,0.1);box-shadow:0 30px 60px rgba(0,0,0,0.8)}}
+
+/* Контейнер */
+#app{width:100%;max-width:450px;height:100vh;height:100dvh;position:relative;z-index:1;display:flex;flex-direction:column;background:#020a05}
+@media(min-width:500px){#app{height:90vh;border-radius:32px;background:rgba(5,20,12,0.8);border:1px solid rgba(74,222,128,0.1);box-shadow:0 30px 60px rgba(0,0,0,0.8);overflow:hidden}}
+
+/* Скролл-контент */
+.content{flex:1;overflow-y:auto;padding:20px;padding-bottom:90px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Экраны */
 .screen{display:none;flex-direction:column;animation:fadeIn .3s ease;min-height:100%}
 .screen.active{display:flex}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* Дисклеймер */
-.disclaimer-box{background:var(--card);border:1px solid rgba(74,222,128,0.15);border-radius:24px;padding:24px;margin:auto 0;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+/* Дисклеймер и Вход */
+.disclaimer-box,.login-box{background:var(--card);border:1px solid rgba(74,222,128,0.15);border-radius:24px;padding:24px;margin:auto 0;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
 .disclaimer-icon{font-size:48px;text-align:center;margin-bottom:16px;text-shadow:0 0 20px var(--glow)}
-.disclaimer-box h1{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;text-align:center;margin-bottom:20px;color:var(--green2)}
+.disclaimer-box h1,.login-box h2{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;text-align:center;margin-bottom:20px;color:var(--green2)}
 .disclaimer-box p{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:12px;display:flex;gap:8px}
 .disclaimer-box p::before{content:'•';color:var(--green);font-weight:bold;font-size:18px;line-height:1}
-.btn-start{width:100%;padding:18px;border-radius:16px;background:linear-gradient(135deg,var(--green),#15803d);color:#fff;font-family:'Unbounded',sans-serif;font-size:15px;font-weight:800;border:none;margin-top:24px;cursor:pointer;box-shadow:0 10px 25px var(--glow);transition:transform 0.2s}
+.btn-start{width:100%;padding:18px;border-radius:16px;background:linear-gradient(135deg,var(--green),#15803d);color:#fff;font-family:'Unbounded',sans-serif;font-size:15px;font-weight:800;border:none;margin-top:16px;cursor:pointer;box-shadow:0 10px 25px var(--glow);transition:transform 0.2s}
 .btn-start:active{transform:scale(0.97)}
-
-/* Вход */
-.login-box{background:var(--card);border:1px solid rgba(74,222,128,0.15);border-radius:24px;padding:30px 24px;margin:auto 0;text-align:center}
-.login-box h2{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#fff,var(--green2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-box p{font-size:13px;color:var(--txt2);margin-bottom:24px}
 .input-group{text-align:left;margin-bottom:16px}
 .input-group label{display:block;font-size:11px;color:var(--txt2);font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
 .input-group input{width:100%;padding:16px;border-radius:14px;background:rgba(0,0,0,0.4);border:1px solid rgba(74,222,128,0.2);color:#fff;font-size:16px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
 .input-group input:focus{border-color:var(--green)}
 
-/* Шапка */
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;margin-top:10px}
+/* Главная страница */
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .header h2{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800}
-.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),#15803d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;border:2px solid rgba(74,222,128,0.3);box-shadow:0 0 15px var(--glow)}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--green),#15803d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;border:2px solid rgba(74,222,128,0.3);box-shadow:0 0 15px var(--glow);position:relative}
+.avatar.vip{border-color:var(--gold);box-shadow:0 0 20px var(--glow-gold);background:linear-gradient(135deg,#b45309,#fbbf24)}
+.avatar.vip::after{content:'👑';position:absolute;top:-8px;right:-8px;font-size:14px;filter:drop-shadow(0 0 4px var(--gold))}
 
 /* Карта */
-.bank-card{width:100%;aspect-ratio:1.58;border-radius:24px;position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 20px 40px rgba(0,0,0,0.6)}
-.bank-card-bg{position:absolute;inset:0;background:linear-gradient(135deg,#052e16 0%,#166534 50%,#14532d 100%);z-index:0}
-.bank-card-bg::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(134,239,172,0.3),transparent 70%);border-radius:50%;filter:blur(20px)}
+.bank-card{width:100%;aspect-ratio:1.58;border-radius:24px;position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 20px 40px rgba(0,0,0,0.6);transition:transform 0.3s;cursor:pointer;margin-bottom:16px}
+.bank-card:active{transform:scale(0.98)}
+.bank-card-bg{position:absolute;inset:0;background:linear-gradient(135deg,#052e16 0%,#166534 50%,#14532d 100%);z-index:0;transition:background 0.3s}
+.bank-card.credit .bank-card-bg{background:linear-gradient(135deg,#450a0a 0%,#7f1d1d 50%,#991b1b 100%)}
+.bank-card.credit .bank-card-logo,.bank-card.credit .balance-currency{color:#fca5a5}
+.bank-card.credit .card-chip{background:linear-gradient(135deg,#9ca3af,#4b5563)}
+.bank-card-bg::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent 70%);border-radius:50%;filter:blur(20px)}
 .bank-card-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start}
 .bank-card-logo{font-family:'Unbounded',sans-serif;font-weight:900;font-size:16px;letter-spacing:1px;color:var(--green-light)}
+.bank-card-type{font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:0.7;font-weight:700}
 .card-chip{width:40px;height:30px;background:linear-gradient(135deg,#fbbf24,#d97706);border-radius:6px;position:relative}
 .card-chip::after{content:'';position:absolute;inset:6px;border:1px solid rgba(0,0,0,0.3);border-radius:3px}
 .bank-card-middle{position:relative;z-index:1;margin-top:auto;margin-bottom:16px}
@@ -67,34 +78,45 @@ body{display:flex;justify-content:center;align-items:center;position:relative}
 .bank-card-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end}
 .card-number{font-family:monospace;font-size:16px;letter-spacing:2px;color:rgba(255,255,255,0.8)}
 .card-holder{font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.card-toggle-hint{font-size:10px;color:var(--txt2);text-align:center;margin-bottom:24px}
 
-/* Кнопки меню */
-.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px;margin-bottom:20px}
-.action-btn{background:var(--card);border:1px solid rgba(74,222,128,0.1);border-radius:18px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:background .2s;color:#fff}
-.action-btn:active{background:rgba(74,222,128,0.15)}
-.action-icon{width:40px;height:40px;border-radius:12px;background:rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--green2)}
-.action-text{font-size:10px;font-weight:600;color:var(--txt2)}
+/* Кнопка перевода (большая) */
+.btn-transfer{width:100%;padding:16px;border-radius:16px;background:var(--card);border:1px solid rgba(74,222,128,0.2);color:var(--txt);font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-bottom:20px;transition:background .2s}
+.btn-transfer:active{background:rgba(74,222,128,0.1)}
+.btn-transfer .icon{color:var(--green2);font-size:18px}
+
+/* Нижнее меню (Навигация) */
+.bottom-nav{position:absolute;bottom:0;left:0;width:100%;background:rgba(5,20,12,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(74,222,128,0.1);display:flex;justify-content:space-around;padding:12px 0 20px;z-index:100}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--txt2);transition:color .2s;background:none;border:none;font-family:'Inter',sans-serif}
+.nav-item.active{color:var(--green2)}
+.nav-icon{font-size:20px}
+.nav-text{font-size:10px;font-weight:600}
+
+/* Вкладки (Вклады, Курс, История) */
+.tab-content{display:none;animation:fadeIn .3s}
+.tab-content.active{display:block}
+.section-title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;margin-bottom:20px;color:var(--txt)}
+
+.deposit-card{background:var(--card);border:1px solid rgba(74,222,128,0.15);border-radius:20px;padding:20px;margin-bottom:16px}
+.deposit-card h3{font-family:'Unbounded',sans-serif;font-size:16px;color:var(--green2);margin-bottom:8px}
+.deposit-card p{font-size:12px;color:var(--txt2);margin-bottom:16px}
+.rate-value{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--gold);text-align:center;margin:20px 0}
 
 /* История */
-.history-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.history-item{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:14px;border-radius:16px;border:1px solid rgba(74,222,128,0.1)}
+.history-item{display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:16px;border-radius:16px;border:1px solid rgba(74,222,128,0.1);margin-bottom:10px}
 .history-left{display:flex;align-items:center;gap:12px}
-.history-icon{width:36px;height:36px;border-radius:10px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--green2)}
-.history-desc{font-size:13px;font-weight:600;color:var(--txt)}
-.history-date{font-size:10px;color:var(--txt2);margin-top:2px}
-.history-amount{font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px}
+.history-icon{width:40px;height:40px;border-radius:12px;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--green2)}
+.history-desc{font-size:14px;font-weight:600;color:var(--txt)}
+.history-date{font-size:11px;color:var(--txt2);margin-top:4px}
+.history-amount{font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px}
 .amount-plus{color:var(--green2)}
 .amount-minus{color:#ef4444}
 
-/* Магазин */
-.shop-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px}
-.shop-item{background:var(--card);border:1px solid rgba(74,222,128,0.15);border-radius:18px;padding:16px;display:flex;align-items:center;justify-content:space-between}
-.shop-info h4{font-size:14px;font-weight:700;color:var(--txt)}
-.shop-info p{font-size:11px;color:var(--txt2);margin-top:4px}
-.btn-buy{padding:10px 16px;border-radius:12px;background:linear-gradient(135deg,var(--green),#15803d);color:#fff;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 10px var(--glow)}
-
-/* Футер */
-.footer-disclaimer{margin-top:auto;text-align:center;font-size:9px;color:rgba(134,168,150,0.5);padding-top:20px;line-height:1.4}
+/* Модальные окна (перевод) */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);z-index:1000;display:none;justify-content:center;align-items:flex-end}
+.modal-overlay.active{display:flex}
+.modal-content{width:100%;max-width:450px;background:#0a1a10;border-radius:24px 24px 0 0;padding:24px;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -105,135 +127,166 @@ body{display:flex;justify-content:center;align-items:center;position:relative}
 
   <!-- ЭКРАН 1: ДИСКЛЕЙМЕР -->
   <div class="screen active" id="screen-disclaimer">
-    <div class="disclaimer-box">
-      <div class="disclaimer-icon">🎮</div>
-      <h1>ВНИМАНИЕ: ЭТО ИГРА</h1>
-      <p>Приложение «Траляля» является исключительно развлекательным сервисом (симулятором).</p>
-      <p>Все балансы, переводы, счета и «валюта» внутри приложения являются вымышленными (игровыми).</p>
-      <p>Приложение не осуществляет реальных финансовых операций, не принимает и не выплачивает настоящие деньги.</p>
-      <button class="btn-start" onclick="goToLogin()">Продолжить</button>
+    <div class="content" style="display:flex;flex-direction:column">
+      <div class="disclaimer-box">
+        <div class="disclaimer-icon">🎮</div>
+        <h1>ВНИМАНИЕ: ЭТО ИГРА</h1>
+        <p>Приложение «Траляля» является исключительно развлекательным сервисом (симулятором).</p>
+        <p>Все балансы, переводы и «валюта» внутри — вымышленные (игровые).</p>
+        <p>Приложение не осуществляет реальных финансовых операций.</p>
+        <button class="btn-start" onclick="goToLogin()">Продолжить</button>
+      </div>
     </div>
   </div>
 
   <!-- ЭКРАН 2: ВХОД -->
   <div class="screen" id="screen-login">
-    <div class="login-box">
-      <h2>Траляля</h2>
-      <p>Войдите в свой игровой аккаунт</p>
-      <div class="input-group">
-        <label>Игровой ник</label>
-        <input type="text" id="loginNick" placeholder="Например: Savva_King" maxlength="15">
+    <div class="content" style="display:flex;flex-direction:column">
+      <div class="login-box">
+        <h2>Траляля</h2>
+        <p style="text-align:center;font-size:13px;color:var(--txt2);margin-bottom:20px">Вход в игровой аккаунт</p>
+        <div class="input-group">
+          <label>Игровой ник</label>
+          <input type="text" id="loginNick" placeholder="savva" maxlength="15">
+        </div>
+        <div class="input-group">
+          <label>Пароль</label>
+          <input type="password" id="loginPass" placeholder="••••••" maxlength="20">
+        </div>
+        <button class="btn-start" onclick="doLogin()">Войти</button>
       </div>
-      <button class="btn-start" onclick="doLogin()">Войти</button>
     </div>
   </div>
 
-  <!-- ЭКРАН 3: ГЛАВНАЯ (КАРТА) -->
-  <div class="screen" id="screen-card">
-    <div class="header">
-      <h2>Мой кошелёк</h2>
-      <div class="avatar" id="userAvatar">?</div>
-    </div>
+  <!-- ЭКРАН 3: ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+  <div class="screen" id="screen-app" style="height:100%">
+    <div class="content">
+      
+      <!-- ВКЛАДКА: ГЛАВНАЯ -->
+      <div class="tab-content active" id="tab-home">
+        <div class="header">
+          <h2>Главная</h2>
+          <div class="avatar" id="userAvatar">?</div>
+        </div>
 
-    <div class="bank-card">
-      <div class="bank-card-bg"></div>
-      <div class="bank-card-top">
-        <div class="bank-card-logo">ТРАЛЯЛЯ</div>
-        <div class="card-chip"></div>
-      </div>
-      <div class="bank-card-middle">
-        <div class="balance-label">Игровой баланс</div>
-        <div class="balance-amount"><span id="userBalance">0</span> <span class="balance-currency">ТЛ</span></div>
-      </div>
-      <div class="bank-card-bottom">
-        <div>
-          <div class="card-number">**** **** **** 1337</div>
-          <div class="card-holder" id="cardHolder">USER</div>
+        <!-- Карта -->
+        <div class="bank-card" id="bankCard" onclick="toggleCardType()">
+          <div class="bank-card-bg"></div>
+          <div class="bank-card-top">
+            <div>
+              <div class="bank-card-logo">ТРАЛЯЛЯ</div>
+              <div class="bank-card-type" id="cardTypeLabel">Дебетовая</div>
+            </div>
+            <div class="card-chip"></div>
+          </div>
+          <div class="bank-card-middle">
+            <div class="balance-label">Игровой баланс</div>
+            <div class="balance-amount"><span id="userBalance">0</span> <span class="balance-currency">T$</span></div>
+          </div>
+          <div class="bank-card-bottom">
+            <div>
+              <div class="card-number" id="cardNumber">**** **** **** 1337</div>
+              <div class="card-holder" id="cardHolder">USER</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-toggle-hint">Нажми на карту, чтобы сменить на кредитную</div>
+
+        <!-- Кнопка перевода -->
+        <button class="btn-transfer" onclick="openTransferModal()">
+          <span class="icon">↗️</span> Перевести T$
+        </button>
+
+        <!-- Быстрые действия -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <button class="btn-transfer" style="margin:0" onclick="switchTab('deposits')">💰 Вклады</button>
+          <button class="btn-transfer" style="margin:0" onclick="switchTab('rate')">📈 Курс</button>
         </div>
       </div>
+
+      <!-- ВКЛАДКА: ВКЛАДЫ -->
+      <div class="tab-content" id="tab-deposits">
+        <div class="header"><h2>Вклады</h2></div>
+        <div class="deposit-card">
+          <h3>Базовый вклад</h3>
+          <p>5% годовых в T$. Открывается на 1 месяц.</p>
+          <button class="btn-start" style="margin:0" onclick="alert('Вклад открыт! (Функция в разработке)')">Открыть</button>
+        </div>
+        <div class="deposit-card">
+          <h3>VIP вклад</h3>
+          <p>15% годовых в T$. Только для VIP-клиентов (savva и nexik).</p>
+          <button class="btn-start" style="margin:0;background:linear-gradient(135deg,#b45309,#fbbf24);box-shadow:0 0 20px var(--glow-gold)" onclick="alert('VIP вклад доступен!')">Открыть VIP</button>
+        </div>
+      </div>
+
+      <!-- ВКЛАДКА: КУРС -->
+      <div class="tab-content" id="tab-rate">
+        <div class="header"><h2>Курс T$</h2></div>
+        <div class="deposit-card" style="text-align:center;background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(0,0,0,0.4));border-color:var(--gold)">
+          <p style="color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:1px">Официальный курс</p>
+          <div class="rate-value">4 347,8 ₽</div>
+          <p>за 1000 T$ <span style="color:#ef4444">📉 (обвал)</span></p>
+        </div>
+        <div class="deposit-card">
+          <p>Сколько это в рублях?</p>
+          <input type="number" id="rateInput" placeholder="Введите сумму в T$" oninput="calcRate()" style="width:100%;padding:14px;border-radius:12px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:16px;margin-top:10px;font-family:'Unbounded'">
+          <div id="rateResult" style="font-family:'Unbounded';font-size:20px;font-weight:800;color:var(--gold);text-align:center;padding:14px;background:rgba(251,191,36,0.1);border-radius:12px;margin-top:12px">~ 0.00 ₽</div>
+        </div>
+      </div>
+
+      <!-- ВКЛАДКА: ИСТОРИЯ -->
+      <div class="tab-content" id="tab-history">
+        <div class="header"><h2>История</h2></div>
+        <div id="historyList">
+          <p style="text-align:center;color:var(--txt2);padding:20px">Загрузка...</p>
+        </div>
+      </div>
+
     </div>
 
-    <div class="quick-actions">
-      <div class="action-btn" onclick="showScreen('screen-transfer')">
-        <div class="action-icon">↗️</div><div class="action-text">Перевести</div>
-      </div>
-      <div class="action-btn" onclick="loadHistory()">
-        <div class="action-icon">📜</div><div class="action-text">История</div>
-      </div>
-      <div class="action-btn" onclick="loadShop()">
-        <div class="action-icon">🛍️</div><div class="action-text">Скидки</div>
-      </div>
-      <div class="action-btn" onclick="alert('Пополнение будет в Шаге 4!')">
-        <div class="action-icon">➕</div><div class="action-text">Пополнить</div>
-      </div>
-    </div>
-
-    <div class="footer-disclaimer">Игровая валюта «ТЛ» не имеет реальной стоимости.<br>Это приложение — симулятор.</div>
+    <!-- НИЖНЕЕ МЕНЮ -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Главная</span>
+      </button>
+      <button class="nav-item" data-tab="deposits" onclick="switchTab('deposits')">
+        <span class="nav-icon">💰</span>
+        <span class="nav-text">Вклады</span>
+      </button>
+      <button class="nav-item" data-tab="rate" onclick="switchTab('rate')">
+        <span class="nav-icon">📈</span>
+        <span class="nav-text">Курс</span>
+      </button>
+      <button class="nav-item" data-tab="history" onclick="switchTab('history'); loadHistory();">
+        <span class="nav-icon">📜</span>
+        <span class="nav-text">История</span>
+      </button>
+    </nav>
   </div>
 
-  <!-- ЭКРАН 4: ПЕРЕВОД -->
-  <div class="screen" id="screen-transfer">
-    <div class="header">
-      <h2>Перевод</h2>
-      <button style="background:none;border:none;color:var(--txt2);font-size:14px;cursor:pointer" onclick="showScreen('screen-card')">Отмена</button>
-    </div>
-    <div class="login-box" style="margin:auto 0">
+  <!-- МОДАЛКА: ПЕРЕВОД -->
+  <div class="modal-overlay" id="transferModal">
+    <div class="modal-content">
+      <div class="header">
+        <h2 style="font-size:18px">Перевод T$</h2>
+        <button style="background:none;border:none;color:var(--txt2);font-size:14px;cursor:pointer" onclick="closeTransferModal()">Отмена</button>
+      </div>
       <div class="input-group">
         <label>Кому (Ник)</label>
-        <input type="text" id="transferTo" placeholder="Ник получателя">
+        <input type="text" id="transferTo" placeholder="Ник получателя" style="width:100%;padding:16px;border-radius:14px;background:rgba(0,0,0,0.4);border:1px solid rgba(74,222,128,0.2);color:#fff;font-size:16px;outline:none">
       </div>
       <div class="input-group">
-        <label>Сумма (ТЛ)</label>
-        <input type="number" id="transferAmount" placeholder="100">
+        <label>Сумма (T$)</label>
+        <input type="number" id="transferAmount" placeholder="100" style="width:100%;padding:16px;border-radius:14px;background:rgba(0,0,0,0.4);border:1px solid rgba(74,222,128,0.2);color:#fff;font-size:16px;outline:none">
       </div>
       <button class="btn-start" onclick="sendMoney()">Отправить</button>
-    </div>
-  </div>
-
-  <!-- ЭКРАН 5: ИСТОРИЯ -->
-  <div class="screen" id="screen-history">
-    <div class="header">
-      <h2>История</h2>
-      <button style="background:none;border:none;color:var(--txt2);font-size:14px;cursor:pointer" onclick="showScreen('screen-card')">Назад</button>
-    </div>
-    <div class="history-list" id="historyList"></div>
-  </div>
-
-  <!-- ЭКРАН 6: МАГАЗИН СКИДОК -->
-  <div class="screen" id="screen-shop">
-    <div class="header">
-      <h2>Скидки</h2>
-      <button style="background:none;border:none;color:var(--txt2);font-size:14px;cursor:pointer" onclick="showScreen('screen-card')">Назад</button>
-    </div>
-    <div class="shop-grid">
-      <div class="shop-item">
-        <div class="shop-info">
-          <h4>Скидка 10% на кораблик</h4>
-          <p>Промокод: SHIP10</p>
-        </div>
-        <button class="btn-buy" onclick="buyDiscount('SHIP10', 100, 'Скидка 10% на S-Ship')">100 ТЛ</button>
-      </div>
-      <div class="shop-item">
-        <div class="shop-info">
-          <h4>Скидка 20% на книгу</h4>
-          <p>Промокод: BOOK20</p>
-        </div>
-        <button class="btn-buy" onclick="buyDiscount('BOOK20', 200, 'Скидка 20% на S-Books')">200 ТЛ</button>
-      </div>
-      <div class="shop-item">
-        <div class="shop-info">
-          <h4>VIP-статус (1 день)</h4>
-          <p>Золотая рамка на аватарке</p>
-        </div>
-        <button class="btn-buy" onclick="buyDiscount('VIP24', 500, 'VIP-статус')">500 ТЛ</button>
-      </div>
     </div>
   </div>
 
 </div>
 
 <script>
-// Ключи от твоего проекта "Не Заяц"
 const firebaseConfig = {
   apiKey: "AIzaSyAyRlnsInyuywDmF9qNWMAmHPHp5fYNJMk",
   authDomain: "nezayac-3176d.firebaseapp.com",
@@ -243,12 +296,13 @@ const firebaseConfig = {
   messagingSenderId: "538765821601",
   appId: "1:538765821601:web:bb3b3df3cd57cbf5d912e0"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 let currentUser = null;
 let userBalance = 0;
+let isCreditCard = false;
+const RATE = 0.0043478; // 1 T$ = 0.0043478 руб
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -256,30 +310,75 @@ function showScreen(id) {
 }
 function goToLogin() { showScreen('screen-login'); }
 
+// Навигация по вкладкам внутри приложения
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-tab="${tabId}"]`).classList.add('active');
+}
+
 // ВХОД
 async function doLogin() {
   const nick = document.getElementById('loginNick').value.trim().toLowerCase();
+  const pass = document.getElementById('loginPass').value.trim();
+  
   if (nick.length < 3) { alert('Ник минимум 3 символа!'); return; }
+  if (pass.length < 3) { alert('Пароль минимум 3 символа!'); return; }
   
   currentUser = nick;
-  localStorage.setItem('tralyala_nick', nick);
   
-  // Используем ветку tralyala_users, чтобы не мешать сайту электричек
   db.ref('tralyala_users/' + nick).once('value').then(snapshot => {
     if (!snapshot.exists()) {
-      db.ref('tralyala_users/' + nick).set({ balance: 1000, nick: nick });
+      // Новый юзер
+      db.ref('tralyala_users/' + nick).set({ balance: 1000, nick: nick, pass: pass });
       userBalance = 1000;
     } else {
-      userBalance = snapshot.val().balance;
+      const data = snapshot.val();
+      if (data.pass !== pass) { alert('Неверный пароль!'); return; }
+      userBalance = data.balance;
     }
     
-    document.getElementById('userAvatar').textContent = nick.charAt(0).toUpperCase();
-    document.getElementById('cardHolder').textContent = nick.toUpperCase();
-    document.getElementById('userBalance').textContent = userBalance;
+    localStorage.setItem('tralyala_nick', nick);
+    localStorage.setItem('tralyala_pass', pass);
     
-    showScreen('screen-card');
-  }).catch(err => alert('Ошибка БД: ' + err.message));
+    updateUI(nick);
+    showScreen('screen-app');
+  }).catch(err => alert('Ошибка: ' + err.message));
 }
+
+// UI
+function updateUI(nick) {
+  const avatar = document.getElementById('userAvatar');
+  avatar.textContent = nick.charAt(0).toUpperCase();
+  document.getElementById('cardHolder').textContent = nick.toUpperCase();
+  document.getElementById('userBalance').textContent = userBalance;
+  
+  if (nick === 'savva' || nick === 'nexik') {
+    avatar.classList.add('vip');
+  }
+}
+
+// КАРТЫ
+function toggleCardType() {
+  isCreditCard = !isCreditCard;
+  const card = document.getElementById('bankCard');
+  const typeLabel = document.getElementById('cardTypeLabel');
+  
+  if (isCreditCard) {
+    card.classList.add('credit');
+    typeLabel.textContent = 'Кредитная';
+    document.getElementById('cardNumber').textContent = '**** **** **** 7777';
+  } else {
+    card.classList.remove('credit');
+    typeLabel.textContent = 'Дебетовая';
+    document.getElementById('cardNumber').textContent = '**** **** **** 1337';
+  }
+}
+
+// МОДАЛКА ПЕРЕВОДА
+function openTransferModal() { document.getElementById('transferModal').classList.add('active'); }
+function closeTransferModal() { document.getElementById('transferModal').classList.remove('active'); }
 
 // ПЕРЕВОД
 async function sendMoney() {
@@ -288,7 +387,7 @@ async function sendMoney() {
   
   if (!toNick || !amount || amount <= 0) { alert('Заполни поля!'); return; }
   if (toNick === currentUser) { alert('Себе нельзя!'); return; }
-  if (amount > userBalance) { alert('Мало ТЛ!'); return; }
+  if (!isCreditCard && amount > userBalance) { alert('Мало T$ на дебетовой!'); return; }
   
   db.ref('tralyala_users/' + toNick).once('value').then(snapshot => {
     if (!snapshot.exists()) { alert('Игрок не найден!'); return; }
@@ -298,81 +397,65 @@ async function sendMoney() {
     updates['tralyala_users/' + toNick + '/balance'] = snapshot.val().balance + amount;
     
     const txTime = Date.now();
-    updates['tralyala_history/' + currentUser + '/' + txTime] = { type: 'out', to: toNick, amount: amount, time: txTime };
+    const method = isCreditCard ? 'Кредитка' : 'Дебетовая';
+    updates['tralyala_history/' + currentUser + '/' + txTime] = { type: 'out', to: toNick, amount: amount, time: txTime, method: method };
     updates['tralyala_history/' + toNick + '/' + txTime] = { type: 'in', from: currentUser, amount: amount, time: txTime };
     
     db.ref().update(updates).then(() => {
       userBalance -= amount;
       document.getElementById('userBalance').textContent = userBalance;
-      alert(`Успешно переведено ${amount} ТЛ!`);
-      showScreen('screen-card');
+      alert(`Переведено ${amount} T$ (${method})`);
+      closeTransferModal();
+      switchTab('home');
     }).catch(err => alert('Ошибка: ' + err.message));
   });
 }
 
 // ИСТОРИЯ
 function loadHistory() {
-  showScreen('screen-history');
   const list = document.getElementById('historyList');
-  list.innerHTML = '<div style="text-align:center;color:var(--txt2);padding:20px">Загрузка...</div>';
+  list.innerHTML = '<p style="text-align:center;color:var(--txt2);padding:20px">Загрузка...</p>';
   
   db.ref('tralyala_history/' + currentUser).limitToLast(20).once('value').then(snapshot => {
     const data = snapshot.val();
-    if (!data) {
-      list.innerHTML = '<div style="text-align:center;color:var(--txt2);padding:20px">История пуста</div>';
-      return;
-    }
+    if (!data) { list.innerHTML = '<p style="text-align:center;color:var(--txt2);padding:20px">История пуста</p>'; return; }
     
     const arr = Object.values(data).sort((a,b) => b.time - a.time);
     list.innerHTML = arr.map(tx => {
       const isOut = tx.type === 'out';
-      const desc = isOut ? `Перевод для ${tx.to}` : `Перевод от ${tx.from}`;
+      const desc = isOut ? `Перевод: ${tx.to}` : `От: ${tx.from}`;
       const sign = isOut ? '-' : '+';
       const colorClass = isOut ? 'amount-minus' : 'amount-plus';
       const date = new Date(tx.time).toLocaleString('ru-RU', {hour:'2-digit', minute:'2-digit', day:'numeric', month:'short'});
+      const method = tx.method ? ` (${tx.method})` : '';
       
       return `
         <div class="history-item">
           <div class="history-left">
             <div class="history-icon">${isOut ? '↗️' : '↙️'}</div>
-            <div><div class="history-desc">${desc}</div><div class="history-date">${date}</div></div>
+            <div><div class="history-desc">${desc}</div><div class="history-date">${date}${method}</div></div>
           </div>
-          <div class="history-amount ${colorClass}">${sign}${tx.amount} ТЛ</div>
+          <div class="history-amount ${colorClass}">${sign}${tx.amount} T$</div>
         </div>
       `;
     }).join('');
   });
 }
 
-// МАГАЗИН
-function loadShop() { showScreen('screen-shop'); }
-
-function buyDiscount(code, price, title) {
-  if (userBalance < price) { alert('Мало ТЛ!'); return; }
-  
-  db.ref('tralyala_users/' + currentUser).once('value').then(snap => {
-    const newBalance = snap.val().balance - price;
-    const txTime = Date.now();
-    
-    const updates = {};
-    updates['tralyala_users/' + currentUser + '/balance'] = newBalance;
-    updates['tralyala_history/' + currentUser + '/' + txTime] = { type: 'out', to: 'Магазин', amount: price, time: txTime, item: title };
-    updates['tralyala_inventory/' + currentUser + '/' + code] = { code: code, title: title, bought: txTime };
-    
-    db.ref().update(updates).then(() => {
-      userBalance = newBalance;
-      document.getElementById('userBalance').textContent = userBalance;
-      alert(`Куплено: ${title}\nПромокод: ${code}`);
-      showScreen('screen-card');
-    });
-  });
+// КУРС
+function calcRate() {
+  const val = parseFloat(document.getElementById('rateInput').value) || 0;
+  const rub = (val * RATE).toFixed(2);
+  document.getElementById('rateResult').textContent = '~ ' + rub + ' ₽';
 }
 
 // Автовход
 window.onload = () => {
   const savedNick = localStorage.getItem('tralyala_nick');
-  if (savedNick) {
+  const savedPass = localStorage.getItem('tralyala_pass');
+  if (savedNick && savedPass) {
     document.getElementById('loginNick').value = savedNick;
+    document.getElementById('loginPass').value = savedPass;
     doLogin();
   }
 };
